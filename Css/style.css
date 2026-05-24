@@ -210,6 +210,14 @@ nav a:hover {
   position: relative;
 }
 
+.product-card .more-info {
+    display: none; /* Garante que fica invisível caso o HTML falhe */
+}
+
+.product-card .more-info.active {
+    display: block !important; /* Força a aparição apenas no card com a classe active */
+}
+
 .product-card:hover {
   transform: translateY(-10px);
 }
