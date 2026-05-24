@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento - Reino Animal</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <i class="fa-solid fa-paw"></i>
+    Reino Animal
+  </div>
+  <nav>
+    <a href="mainreino.html">Início</a>
+    <a href="loja.html">Loja</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="racas.html">Raças</a>
+    <a href="ajuda.html">Ajuda</a>
+  </nav>
+  <div class="icons">
+    <a href="./login.html"><i class="fa-regular fa-user"></i></a>
+  </div>
+</header>
+
+<section class="help-page">
+  <div class="help-title">
+    <h1>💳 Finalizar Compra</h1>
+    <p>Preencha os dados abaixo para garantir os mimos do seu pet.</p>
+  </div>
+
+  <div class="help-container">
+    <form class="help-form" id="pagamentoForm">
+      <h2>Endereço de Entrega</h2>
+      <div class="input-group">
+        <input type="text" id="cep" placeholder="CEP" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="endereco" placeholder="Endereço Completo, Número e Bairro" required>
+      </div>
+
+      <h2 style="margin-top: 35px; margin-bottom: 20px;">Método de Pagamento</h2>
+      
+      <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+        <label id="labelCartao" style="flex: 1; padding: 20px; border: 2px solid #16a34a; border-radius: 15px; background: #f0fdf4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: 0.3s;">
+          <input type="radio" name="pagamento" value="cartao" checked style="display: none;">
+          <i class="fa-regular fa-credit-card" style="font-size: 2rem; color: #14532d;"></i>
+          <span style="font-weight: 600; color: #14532d; font-size: 1.1rem;">Cartão</span>
+        </label>
+
+        <label id="labelPix" style="flex: 1; padding: 20px; border: 2px solid #e4e4e7; border-radius: 15px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: 0.3s;">
+          <input type="radio" name="pagamento" value="pix" style="display: none;">
+          <i class="fa-brands fa-pix" style="font-size: 2rem; color: #14532d;"></i>
+          <span style="font-weight: 600; color: #14532d; font-size: 1.1rem;">Pix</span>
+        </label>
+      </div>
+
+      <div id="dadosCartao" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #e4e4e7; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+        
+        <p style="font-weight: 600; color: #14532d; margin-bottom: 15px;">Selecione a função:</p>
+        <div style="display: flex; gap: 30px; margin-bottom: 20px;">
+          <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; color: #52525b; cursor: pointer;">
+            <input type="radio" name="tipoCartao" value="crédito" checked style="accent-color: #16a34a; width: 18px; height: 18px;"> Crédito
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; color: #52525b; cursor: pointer;">
+            <input type="radio" name="tipoCartao" value="débito" style="accent-color: #16a34a; width: 18px; height: 18px;"> Débito
+          </label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" placeholder="Número do Cartão" maxlength="19" required>
+        </div>
+        <div style="display: flex; gap: 15px;">
+          <div class="input-group" style="width: 50%;">
+            <input type="text" placeholder="Validade (MM/AA)" required>
+          </div>
+          <div class="input-group" style="width: 50%;">
+            <input type="text" placeholder="CVV" maxlength="3" required>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" style="margin-top: 25px;">Confirmar Pagamento</button>
+    </form>
+
+    <div class="help-info">
+      <div class="info-card" style="background: #fff;">
+        <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-box"></i> Resumo do Pedido</h3>
+        <p style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <span>Subtotal:</span> <strong id="resumoSubtotal">R$ 0,00</strong>
+        </p>
+        <p style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+          <span>Frete:</span> <strong style="color: #16a34a;">Grátis</strong>
+        </p>
+        <hr style="border: 0; border-top: 1px solid #e4e4e7; margin: 15px 0;">
+        <p style="display: flex; justify-content: space-between; font-size: 1.2rem;">
+          <span>Total:</span> <strong style="color: #14532d;" id="resumoTotal">R$ 0,00</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h2><i class="fa-solid fa-paw"></i> Reino Animal</h2>
+      <p>Tudo para o seu melhor amigo. Produtos premium, carinho e qualidade para cães e gatos.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h3>Navegação</h3>
+      <a href="mainreino.html">Início</a>
+      <a href="loja.html">Loja</a>
+      <a href="servicos.html">Serviços</a>
+      <a href="racas.html">Raças</a>
+    </div>
+    <div class="footer-contact">
+      <h3>Contato</h3>
+      <p><i class="fa-solid fa-location-dot"></i> São Paulo - Brasil</p>
+      <p><i class="fa-solid fa-phone"></i> (11) 99999-9999</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Reino Animal - Todos os direitos reservados
+  </div>
+</footer>
+
+<script src="pagamento.js"></script>
+</body>
+</html>
