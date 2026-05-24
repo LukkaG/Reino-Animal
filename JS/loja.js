@@ -125,8 +125,6 @@ function toggleInfo(button){
   info.classList.toggle("active");
 }
 
-// === LÓGICA DE PERSISTÊNCIA DO CARRINHO ===
-// Tenta puxar o carrinho do LocalStorage. Se não tiver, cria vazio.
 let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
 function toggleCart(){
@@ -190,9 +188,45 @@ function atualizarCarrinho(){
   cartTotal.innerText = total.toLocaleString("pt-BR",{ style:"currency", currency:"BRL" });
   cartCount.innerText = quantidadeTotal;
 
-  // SALVA NO LOCALSTORAGE SEMPRE QUE ATUALIZAR
   localStorage.setItem('carrinho', JSON.stringify(carrinho));
 }
 
-// Renderiza o carrinho ao carregar a página da loja (para já mostrar o que estava salvo)
 atualizarCarrinho();
+
+const productsGrid = document.getElementById('productsGrid');
+
+async function carregarProdutos() {
+    try {
+        // 2. Faz a busca dos produtos na sua rota GET do back-end
+        const resposta = await fetch('http://localhost:3000/produtos');
+        const produtos = await resposta.json();
+
+        productsGrid.innerHTML = ""; // Limpa a tela
+
+        if (produtos.length === 0) {
+            productsGrid.innerHTML = "<p>Nenhum produto encontrado na loja.</p>";
+            return;
+        }
+
+        // 3. Varre a lista de produtos trazida do MongoDB
+        produtos.forEach(produto => {
+            // Injeta o HTML dos cards dinamicamente dentro do grid
+            productsGrid.innerHTML += `
+                <div class="product-card">
+                    <h3>${produto.nomeProduto}</h3>
+                    <p>${produto.descricao}</p>
+                    <p><strong>Categoria:</strong> ${produto.categoria}</p>
+                    <span class="price">R$ ${produto.preco.toFixed(2)}</span>
+                    <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error("Erro ao buscar produtos:", err);
+        productsGrid.innerHTML = "<p>Erro ao conectar com o servidor da loja.</p>";
+    }
+}
+
+// Executa a função ao carregar a página
+carregarProdutos();

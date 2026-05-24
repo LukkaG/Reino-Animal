@@ -1,0 +1,30 @@
+{
+  "name": "reino-animal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch JS/Main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukkaG/Reino-Animal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LukkaG/Reino-Animal/issues"
+  },
+  "homepage": "https://github.com/LukkaG/Reino-Animal#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "4.1",
+    "mongoose": "^9.6.2"
+  }
+}

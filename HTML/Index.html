@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reino Animal</title>
+
+  <link rel="stylesheet" href="/Css/Style.css">
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+</head>
+
+<body>
+
+  <header class="topbar">
+  <div class="logo">
+    <i class="fa-solid fa-paw"></i>
+    Reino Animal
+  </div>
+  <nav>
+    <a href="Index.html">Início</a>
+    <a href="loja.html">Loja</a>
+    <a href="#">Serviços</a>
+    <a href="racas.html">Raças</a>
+    <a href="ajuda.html">Ajuda</a>
+    <a href="./login.html">Login</a>
+  </nav>
+  <div class="icons">
+    <div class="cart-icon" onclick="toggleCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cart-count">0</span>
+    </div>
+    <a href="./login.html"><i class="fa-regular fa-user"></i></a>
+    <i class="fa-solid fa-bars" id="menu-icon" onclick="document.querySelector('nav').classList.toggle('active')"></i>
+  </div>
+</header>
+
+  <section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+      <h1>Tudo para seu melhor amigo</h1>
+
+      <p>
+        Produtos premium para cães felizes e saudáveis.
+      </p>
+
+      <a href="loja.html">
+        <button>Comprar Agora</button>
+      </a>
+    </div>
+
+  </section>
+
+  <section class="benefits">
+
+    <div class="benefit">
+      <i class="fa-solid fa-truck"></i>
+      Frete grátis acima de R$199
+    </div>
+
+    <div class="benefit">
+      <i class="fa-regular fa-circle-check"></i>
+      Produtos 100% originais
+    </div>
+
+    <div class="benefit">
+      <i class="fa-regular fa-credit-card"></i>
+      Até 12x sem juros
+    </div>
+
+  </section>
+
+  <section class="categories">
+
+    <h2>Categorias</h2>
+    <p>Encontre tudo que seu pet precisa</p>
+
+    <div class="category-grid">
+
+      <div class="category-card">
+        <a href="./racas.html"><img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=1200&auto=format&fit=crop">
+        <span>Rações</span></a>
+      </div>
+
+      <div class="category-card">  
+        <a href="./racas.html"><img src="https://images.unsplash.com/photo-1589924749359-9697080c3577?q=80&w=870&auto=format&fit=crop">
+        <span>Brinquedos</span></a>
+      </div>
+
+      <div class="category-card">
+        <a href="./racas.html"><img src="https://images.unsplash.com/photo-1667716705760-233650f8f3fe?q=80&w=1200&auto=format&fit=crop">
+        <span>Acessórios</span></a>
+      </div>
+
+      <div class="category-card">
+        <a href="./racas.html"><img src="https://images.unsplash.com/photo-1608138498574-e5dab4c0ca52?q=80&w=1200&auto=format&fit=crop">
+        <span>Higiene</span></a>
+      </div>
+
+      <div class="category-card">
+        <a href="./racas.html"><img src="https://plus.unsplash.com/premium_photo-1661942274165-00cc8d55a93f?q=80&w=1200&auto=format&fit=crop">
+        <span>Medicamentos</span></a>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="products">
+
+    <h2>Destaques & Promoções</h2>
+    <p>Os produtos mais amados pelos nossos clientes</p>
+
+    <div class="product-grid">
+
+      <div class="product-card">
+
+        <div class="tag">Mais Vendido</div>
+
+        <img src="https://plus.unsplash.com/premium_photo-1726761692986-6bcde87fc2b8?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Ração Premium Gold 15kg</h3>
+
+        <span class="price">R$ 189,90</span>
+
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="tag promo">Promoção</div>
+
+        <img src="https://images.unsplash.com/photo-1627581480785-eb0b104c10e8?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Coleira LED Noturna</h3>
+
+        <span class="price">R$ 49,90</span>
+
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="tag promo">Promoção</div>
+
+        <img src="https://images.unsplash.com/photo-1565674244283-993fb27a215f?q=80&w=1200&auto=format&fit=crop">
+
+        <h3>Ração Filhotes Especial</h3>
+
+        <span class="price">R$ 149,90</span>
+
+
+      </div>
+
+      <div class="product-card">
+
+        <div class="tag">Mais Vendido</div>
+
+        <img src="https://images.unsplash.com/photo-1492748046438-4b6d9ebe0c11?q=80&w=687&auto=format&fit=crop">
+
+        <h3>Cama Ortopédica Grande</h3>
+
+        <span class="price">R$ 259,90</span>
+
+
+      </div>
+
+    </div>
+
+  </section>
+  <section class="reviews">
+
+  <div class="reviews-title">
+
+    <h2>💚 O que nossos clientes dizem</h2>
+
+    <p>
+      Mais de 10 mil clientes satisfeitos com a Reino Animal
+    </p>
+
+  </div>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        “Meu cachorro simplesmente amou a ração premium.
+        Entrega rápida e atendimento excelente.”
+      </p>
+
+      <div class="review-user">
+
+        <img src="https://randomuser.me/api/portraits/women/44.jpg">
+
+        <div>
+          <h4>Ana Carolina</h4>
+          <span>Cliente há 2 anos</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="review-card">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        “Os brinquedos são muito resistentes.
+        Meu Golden Retriever ficou apaixonado.”
+      </p>
+
+      <div class="review-user">
+
+        <img src="https://randomuser.me/api/portraits/men/32.jpg">
+
+        <div>
+          <h4>Lucas Ferreira</h4>
+          <span>Cliente verificado</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="review-card">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        “A melhor loja pet que já comprei.
+        Produtos lindos e qualidade absurda.”
+      </p>
+
+      <div class="review-user">
+
+        <img src="https://randomuser.me/api/portraits/women/68.jpg">
+
+        <div>
+          <h4>Mariana Alves</h4>
+          <span>Cliente premium</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="review-card">
+
+      <div class="stars">
+        ★★★★★
+      </div>
+
+      <p>
+        “Comprei uma cama ortopédica e meu gato
+        agora dorme nela o dia inteiro.”
+      </p>
+
+      <div class="review-user">
+
+        <img src="https://randomuser.me/api/portraits/men/41.jpg">
+
+        <div>
+          <h4>Ricardo Lima</h4>
+          <span>Cliente satisfeito</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <div class="footer-brand">
+
+      <h2>
+        <i class="fa-solid fa-paw"></i>
+        Reino Animal
+      </h2>
+
+      <p>
+        Tudo para o seu melhor amigo.
+        Produtos premium, carinho e qualidade para cães e gatos.
+      </p>
+
+      <div class="footer-social">
+
+        <a href="#">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+
+        <a href="#">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+
+        <a href="#">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+        <a href="#">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-links">
+
+      <h3>Navegação</h3>
+
+      <a href="Index.html">Início</a>
+      <a href="loja.html">Loja</a>
+      <a href="racas.html">Raças</a>
+      <a href="ajuda.html">Ajuda</a>
+
+    </div>
+
+    <div class="footer-links">
+
+      <h3>Atendimento</h3>
+
+      <a href="#">Entrega</a>
+      <a href="#">Trocas</a>
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="#">Contato</a>
+
+    </div>
+
+    <div class="footer-contact">
+
+      <h3>Contato</h3>
+
+      <p>
+        <i class="fa-solid fa-location-dot"></i>
+        São Paulo - Brasil
+      </p>
+
+      <p>
+        <i class="fa-solid fa-phone"></i>
+        (11) 99999-9999
+      </p>
+
+      <p>
+        <i class="fa-solid fa-envelope"></i>
+        contato@reinoanimal.com
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+
+    © 2026 Reino Animal - Todos os direitos reservados
+
+  </div>
+</body>
+
+
+</footer>
+</html>

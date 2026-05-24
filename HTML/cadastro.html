@@ -10,21 +10,27 @@
 <body>
 
   <header class="topbar">
-    <div class="logo">
-      <i class="fa-solid fa-paw"></i>
-      Reino Animal
+  <div class="logo">
+    <i class="fa-solid fa-paw"></i>
+    Reino Animal
+  </div>
+  <nav>
+    <a href="Index.html">Início</a>
+    <a href="loja.html">Loja</a>
+    <a href="#">Serviços</a>
+    <a href="racas.html">Raças</a>
+    <a href="ajuda.html">Ajuda</a>
+    <a href="./login.html">Login</a>
+  </nav>
+  <div class="icons">
+    <div class="cart-icon" onclick="toggleCart()">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cart-count">0</span>
     </div>
-    <nav>
-      <a href="./mainreino.html">Início</a>
-      <a href="./loja.html">Loja</a>
-      <a href="#">Serviços</a>
-      <a href="./racas.html">Raças</a>
-      <a href="./ajuda.html">Ajuda</a>
-    </nav>
-    <div class="icons">
-      <a href="./login.html"><i class="fa-regular fa-user"></i></a>
-    </div>
-  </header>
+    <a href="./login.html"><i class="fa-regular fa-user"></i></a>
+    <i class="fa-solid fa-bars" id="menu-icon" onclick="document.querySelector('nav').classList.toggle('active')"></i>
+  </div>
+</header>
 
   <section class="login-page">
     <div class="login-container">
@@ -69,6 +75,13 @@
               <i class="fa-regular fa-eye toggle-password" data-target="confirmPassword"></i>
             </div>
           </div>
+          <div class="input-group">
+            <label>Endereço</label>
+            <div class="input-box">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <input type="text" id="address" placeholder="Digite seu Endereço Completo" required>
+            </div>
+          </div>
           <button type="submit" class="login-btn">Cadastrar</button>
         </form>
         <p class="register-text">
@@ -94,9 +107,8 @@
       </div>
       <div class="footer-links">
         <h3>Navegação</h3>
-        <a href="mainreino.html">Início</a>
+        <a href="Index.html">Início</a>
         <a href="loja.html">Loja</a>
-        <a href="servicos.html">Serviços</a>
         <a href="racas.html">Raças</a>
         <a href="ajuda.html">Ajuda</a>
       </div>

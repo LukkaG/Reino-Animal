@@ -1,25 +1,19 @@
-// Seleciona todos os botões de mostrar/ocultar senha
 const togglePasswords = document.querySelectorAll(".toggle-password");
 
 togglePasswords.forEach(toggle => {
   toggle.addEventListener("click", () => {
-    // Pega o ID do input correspondente através do data-target
     const targetId = toggle.getAttribute("data-target");
     const passwordInput = document.getElementById(targetId);
-
-    // Alterna entre text e password
     const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
     passwordInput.setAttribute("type", type);
 
-    // Alterna o ícone
     toggle.classList.toggle("fa-eye");
     toggle.classList.toggle("fa-eye-slash");
   });
 });
 
-// Impede o envio do formulário padrão para facilitar o teste
 const form = document.getElementById("registerForm");
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
   
   const password = document.getElementById("password").value;
@@ -30,6 +24,36 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  alert("Cadastro realizado com sucesso! (Simulação)");
-  window.location.href = "./login.html"; // Redireciona para o login após cadastrar
+  try {
+    const nomeDigitado = document.getElementById('nome').value;
+    const emailDigitado = document.getElementById('email').value;
+    const enderecoDigitado = document.getElementById('address').value;
+
+    const resposta = await fetch('http://localhost:3000/usuarios', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nomeCompleto: nomeDigitado,
+            email: emailDigitado,
+            senha: password,
+            endereco: enderecoDigitado
+        })
+    });
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+        alert('Cadastro realizado com sucesso!');
+        window.location.href = "./login.html";
+    } else {
+        alert('Erro ao cadastrar: ' + dados.erro);
+    }
+
+} catch (err) {
+    console.error('Erro na conexão:', err);
+    alert('Erro ao conectar com o servidor.');
+}
+
 });
