@@ -22,8 +22,9 @@ const dbURI = process.env.MONGO_URI;
 
 console.log('Link encontrado pelo Node:', dbURI);
 
+app.use(express.static(path.resolve(__dirname, '..', 'HTML')));
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'HTML', 'Index.html')); 
+    res.sendFile(path.resolve(__dirname, '..', 'HTML', 'Index.html'));
 });
 
 app.post('/finalizar-compra', verificarToken, async (req, res) => {
