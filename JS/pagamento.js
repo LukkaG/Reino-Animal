@@ -1,4 +1,3 @@
-// Controle visual dos botões de pagamento (Cards Cartão x Pix)
 const radiosPagamento = document.querySelectorAll('input[name="pagamento"]');
 const divDadosCartao = document.getElementById('dadosCartao');
 const labelCartao = document.getElementById('labelCartao');
@@ -25,43 +24,77 @@ radiosPagamento.forEach(radio => {
   });
 });
 
-// === LÓGICA DE PERSISTÊNCIA DO CARRINHO (LOCALSTORAGE) ===
-const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+const itensDoCarrinho = JSON.parse(localStorage.getItem('carrinhoReinoAnimal')) || [];
+console.log("Conteúdo do carrinho no localStorage:", itensDoCarrinho);
 const resumoSubtotal = document.getElementById('resumoSubtotal');
 const resumoTotal = document.getElementById('resumoTotal');
 
-// Se o carrinho estiver vazio, manda o cara de volta pra loja
-if(carrinho.length === 0) {
-  alert("Seu carrinho está vazio! Adicione produtos antes de finalizar a compra.");
+if(itensDoCarrinho.length === 0) {
+  alert("Seu carrinho está vazio! ...");
   window.location.href = "./loja.html";
 }
 
-// Calcula o total puxando os dados reais dos produtos salvos
 let total = 0;
-carrinho.forEach(produto => {
-  const precoNumero = Number(produto.preco.replace("R$","").replace(".","").replace(",","."));
-  total += precoNumero * produto.quantidade;
+itensDoCarrinho.forEach(produto => {
+    const preco = typeof produto.preco === 'number' ? produto.preco : parseFloat(produto.preco);
+    total += preco * produto.quantidade;
 });
 
 const totalFormatado = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 resumoSubtotal.innerText = totalFormatado;
 resumoTotal.innerText = totalFormatado;
 
-// === FINALIZAÇÃO DO PEDIDO ===
-document.getElementById('pagamentoForm').addEventListener('submit', function(event) {
+document.getElementById('pagamentoForm').addEventListener('submit', async function(event) {
   event.preventDefault(); 
-
-  const metodoSelecionado = document.querySelector('input[name="pagamento"]:checked').value;
-  const endereco = document.getElementById('endereco').value;
-
-  if (metodoSelecionado === 'pix') {
-    alert(`✅ Pedido de ${totalFormatado} confirmado via Pix! A chave/QR Code foi enviada para o seu e-mail. Entrega: ${endereco}`);
-  } else {
-    const tipoCartao = document.querySelector('input[name="tipoCartao"]:checked').value;
-    alert(`✅ Pagamento de ${totalFormatado} aprovado no Cartão de ${tipoCartao.toUpperCase()}! Entrega: ${endereco}`);
+  const token = localStorage.getItem('tokenReinoAnimal');
+  
+  if (!token) {
+      alert("Você precisa estar logado para finalizar a compra.");
+      window.location.href = "./login.html";
+      return;
   }
+  try {
+    const resposta = await fetch('http://localhost:3000/finalizar-compra', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ 
+            itens: itensDoCarrinho,
+            total: total
+        })
+    });
 
-  // Limpa o carrinho do navegador após a compra e volta pro início!
-  localStorage.removeItem('carrinho');
-  window.location.href = "./mainreino.html";
+    if (resposta.ok) {
+        localStorage.removeItem('carrinhoReinoAnimal');
+        alert("✅ Pedido finalizado com sucesso e salvo no sistema!");
+        window.location.href = "./index.html";
+    } else {
+        const dadosErro = await resposta.json();
+        alert("Erro ao finalizar: " + (dadosErro.erro || "Tente novamente"));
+    }
+  } catch (erro) {
+    console.error("Erro na comunicação:", erro);
+    alert("Erro ao conectar com o servidor.");
+  }
 });
+
+function renderizarResumoItens() {
+    const container = document.getElementById('resumo-itens-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    itensDoCarrinho.forEach(produto => {
+        container.innerHTML += `
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>${produto.quantidade}x ${produto.nome}</span>
+                <span>R$ ${(produto.preco * produto.quantidade).toFixed(2).replace('.', ',')}</span>
+            </div>
+        `;
+    });
+}
+
+renderizarResumoItens();

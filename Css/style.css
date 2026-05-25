@@ -41,27 +41,64 @@ body {
   gap: 10px;
 }
 
+/* 1. Comportamento para Celulares (Padrão) */
 nav {
-  display: flex;
-  gap: 30px;
+    gap: 30px;
 }
 
 nav a {
-  text-decoration: none;
-  color: #163020;
-  font-weight: 500;
-  transition: .3s;
+    text-decoration: none;
+    color: #163020;
+    font-weight: 500;
+    transition: .3s;
 }
 
 nav a:hover {
-  color: #1f7a45;
+    color: #1f7a45;
+}
+
+/* --- ESTILOS RESPONSIVOS (Só mudam o layout) --- */
+
+/* Celular (Até 768px) */
+@media (max-width: 768px) {
+    nav {
+        display: none; /* Escondido por padrão */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    nav.active {
+        display: flex !important;
+    }
+}
+
+/* Computador (Acima de 768px) */
+@media (min-width: 769px) {
+    nav {
+        display: flex !important;
+        flex-direction: row;
+        position: static;
+        box-shadow: none;
+        padding: 0;
+        width: auto;
+    }
+    
+    #menu-icon {
+        display: none;
+    }
 }
 
 .icons {
-  display: flex;
-  gap: 20px;
-  font-size: 1.1rem;
-  cursor: pointer;
+    display: flex;
+    gap: 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 
 .hero {

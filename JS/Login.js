@@ -1,5 +1,12 @@
 const togglePassword = document.querySelector(".toggle-password");
 const passwordInput = document.querySelector("#password");
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('tokenReinoAnimal');
+    
+    if (token) {
+        window.location.href = "/HTML/loja.html";
+    }
+});
 
 togglePassword.addEventListener("click", () => {
 
@@ -54,3 +61,21 @@ form.addEventListener('submit', async (event) => {
     alert('Não foi possível conectar ao servidor do Reino Animal.');
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const loginLink = document.getElementById('loginLink'); // ID do seu botão de login no nav
+    const token = localStorage.getItem('tokenReinoAnimal');
+
+    if (token) {
+        // Usuário logado: troca o botão de login por um botão de Sair
+        loginLink.innerHTML = '<button onclick="logout()">Sair</button>';
+    }
+});
+
+function logout() {
+    localStorage.removeItem('tokenReinoAnimal'); // Apaga o token
+    window.location.href = "/HTML/index.html"; // Volta para a home
+}
+
+const token = localStorage.getItem('tokenReinoAnimal');
+

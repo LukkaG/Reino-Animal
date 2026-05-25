@@ -1,5 +1,6 @@
 const Usuario = require('../models/Usuario');
 const Produto = require('../models/Produto');
+const Pedido = require('../models/Pedido');
 const verificarToken = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 const Raca = require('../models/Raca');       
@@ -19,6 +20,22 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const dbURI = process.env.MONGO_URI;
 
 console.log('Link encontrado pelo Node:', dbURI);
+
+app.post('/finalizar-compra', verificarToken, async (req, res) => {
+    try {
+        const { itens, total } = req.body;
+        const novoPedido = new Pedido({
+            usuario: req.usuarioId,
+            itens,
+            total
+        });
+
+        await novoPedido.save();
+        res.status(201).json({ mensagem: 'Pedido realizado com sucesso!' });
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro ao salvar pedido: ' + err.message });
+    }
+});
 
 app.post('/usuarios', async (req, res) => {
   try {

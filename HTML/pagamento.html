@@ -22,7 +22,7 @@
     <a href="ajuda.html">Ajuda</a>
   </nav>
   <div class="icons">
-    <a href="./login.html"><i class="fa-regular fa-user"></i></a>
+    <a href="./login.html" id="iconeUsuario"><i class="fa-regular fa-user"></i></a>
   </div>
 </header>
 
@@ -89,6 +89,8 @@
     <div class="help-info">
       <div class="info-card" style="background: #fff;">
         <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-box"></i> Resumo do Pedido</h3>
+        <div id="resumo-itens-container">
+        </div>
         <p style="display: flex; justify-content: space-between; margin-bottom: 10px;">
           <span>Subtotal:</span> <strong id="resumoSubtotal">R$ 0,00</strong>
         </p>
@@ -150,6 +152,5 @@
 </footer>
 
 <script src="/JS/pagamento.js"></script>
-<script src="/JS/carrinho.js"></script>
 </body>
 </html>

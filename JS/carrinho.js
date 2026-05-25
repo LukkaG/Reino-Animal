@@ -1,22 +1,39 @@
 let carrinho = JSON.parse(localStorage.getItem('carrinhoReinoAnimal')) || [];
 
+document.getElementById('iconeUsuario').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const token = localStorage.getItem('tokenReinoAnimal');
+
+    if (token) {
+        // Se estiver logado, pergunta se quer sair
+        const confirmar = confirm("Deseja sair da sua conta?");
+        if (confirmar) {
+            localStorage.removeItem('tokenReinoAnimal');
+            localStorage.removeItem('carrinhoReinoAnimal'); // Limpa o carrinho ao sair
+            alert("Você saiu com sucesso!");
+            window.location.href = "./index.html";
+        }
+    } else {
+        // Se não estiver logado, leva para o login
+        window.location.href = "./login.html";
+    }
+});
+
 function toggleCart() {
     const sidebar = document.getElementById("cartSidebar");
-    if (sidebar) sidebar.classList.add("active"); // Adiciona a classe, não inverte (toggle)
+    if (sidebar) sidebar.classList.add("active");
 }
 
-// E na função de fechar (quando clicar no 'X' do carrinho), crie esta nova:
 function closeCart() {
     const sidebar = document.getElementById("cartSidebar");
     if (sidebar) sidebar.classList.remove("active");
 }
 
-// 2. A NOVA FUNÇÃO: Recebe os dados diretamente do botão clicado
 function adicionarAoCarrinho(botao) {
-    // Extrai os dados que guardamos escondidos no botão HTML
     const id = botao.getAttribute('data-id');
     const nome = botao.getAttribute('data-nome');
-    const preco = parseFloat(botao.getAttribute('data-preco')); // Já vem como número puro!
+    const preco = parseFloat(botao.getAttribute('data-preco'));
     const imagem = botao.getAttribute('data-imagem');
 
     const itemExistente = carrinho.find(item => item.id === id);
@@ -28,10 +45,9 @@ function adicionarAoCarrinho(botao) {
     }
     
     atualizarCarrinho();
-    toggleCart(); // Abre o carrinho na hora para o utilizador ver
+    toggleCart();
 }
 
-// 3. Atualiza usando o ID (seguro contra nomes repetidos)
 function alterarQuantidade(id, tipo) {
     const item = carrinho.find(produto => produto.id === id);
     if (!item) return;
@@ -83,5 +99,4 @@ function atualizarCarrinho() {
     localStorage.setItem('carrinhoReinoAnimal', JSON.stringify(carrinho));
 }
 
-// Quando a página carregar, desenha o carrinho
 document.addEventListener('DOMContentLoaded', atualizarCarrinho);
