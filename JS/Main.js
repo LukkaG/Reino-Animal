@@ -176,18 +176,19 @@ app.post('/login', async (req, res) => {
     }
 });
 
-mongoose.connect(dbURI)
-.then(() => {
-    console.log('Conectado ao MongoDB com sucesso!');
-    const port = 3000;
-    app.listen(port, () => {
-      console.log(`Servidor Web Ativo em http://localhost:${port}`)
-    });
-    return Usuario.find();
-  })
-  .then((usuarioSalvos) => {
-    console.log('Estes são os seus usuários salvos:', usuarioSalvos);
-  })
-  .catch((err) => console.error('Erro na operação:', err));
+const PORT = process.env.PORT || 3000;
 
+mongoose.connect(dbURI)
+  .then(() => {
+    console.log('Conectado ao MongoDB com sucesso!');
+    
+    // Inicie o servidor APÓS a conexão com o banco
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Erro na conexão com o banco:', err);
+    process.exit(1); // Finaliza o processo se não conseguir conectar
+  });
   
