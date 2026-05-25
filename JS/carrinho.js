@@ -12,7 +12,7 @@ document.getElementById('iconeUsuario').addEventListener('click', function(event
             localStorage.removeItem('tokenReinoAnimal');
             localStorage.removeItem('carrinhoReinoAnimal'); // Limpa o carrinho ao sair
             alert("Você saiu com sucesso!");
-            window.location.href = "./index.html";
+            window.location.href = "./Index.html";
         }
     } else {
         // Se não estiver logado, leva para o login
