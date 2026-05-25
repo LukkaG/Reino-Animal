@@ -1,5 +1,7 @@
 const Usuario = require('../models/Usuario');
 const Produto = require('../models/Produto');
+const verificarToken = require('../middleware/auth');
+const jwt = require('jsonwebtoken');
 const Raca = require('../models/Raca');       
 const mongoose = require('mongoose');
 const express = require('express');
@@ -126,30 +128,35 @@ app.delete('/produtos/:id', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  try {
-    const { email, senha } = req.body;
+    try {
+        const { email, senha } = req.body;
+        const usuarioEncontrado = await Usuario.findOne({ email: email });
 
-    const usuarioEncontrado = await Usuario.findOne({ email: email });
+        if (!usuarioEncontrado) {
+            return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
+        }
 
-    if (!usuarioEncontrado) {
-      return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
+        const senhaCorreta = await bcrypt.compare(senha, usuarioEncontrado.senha);
+
+        if (!senhaCorreta) {
+            return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
+        }
+
+        const token = jwt.sign(
+            { id: usuarioEncontrado._id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
+
+        res.status(200).json({ 
+            mensagem: 'Login realizado com sucesso! 🎉',
+            token: token,
+            usuario: { nome: usuarioEncontrado.nomeCompleto }
+        });
+
+    } catch (err) {
+        res.status(500).json({ erro: 'Erro no servidor: ' + err.message });
     }
-
-     const senhaCorreta = await bcrypt.compare(senha, usuarioEncontrado.senha);
-
-     if (!senhaCorreta) {
-      return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
-       }
-
-    res.status(200).json({ 
-      mensagem: 'Login realizado com sucesso! 🎉',
-      usuario: { nome: usuarioEncontrado.nomeCompleto }
-      
-    });
-
-  } catch (err) {
-    res.status(500).json({ erro: 'Erro no servidor: ' + err.message });
-  }
 });
 
 mongoose.connect(dbURI)

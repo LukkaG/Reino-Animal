@@ -41,7 +41,9 @@ form.addEventListener('submit', async (event) => {
     const dados = await resposta.json();
 
     if (resposta.ok) {
+      localStorage.setItem('tokenReinoAnimal', dados.token);
       alert(`Bem-vindo de volta, ${dados.usuario.nome}!`);
+      window.location.href = "/HTML/index.html";
       
     } else {
       alert(dados.erro);
