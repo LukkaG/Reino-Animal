@@ -55,7 +55,7 @@ document.getElementById('pagamentoForm').addEventListener('submit', async functi
       return;
   }
   try {
-    const resposta = await fetch('http://localhost:3000/finalizar-compra', {
+    const resposta = await fetch('/finalizar-compra', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

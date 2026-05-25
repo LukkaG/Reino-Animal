@@ -71,7 +71,7 @@ function toggleInfo(botaoClicado) {
 // 4. BUSCA OS PRODUTOS DIRETO DA API DO BACK-END (MONGO DB)
 async function carregarProdutos() {
     try {
-        const resposta = await fetch('http://localhost:3000/produtos');
+        const resposta = await fetch('/produtos');
         todosOsProdutos = await resposta.json();
         
         renderProdutos(todosOsProdutos);

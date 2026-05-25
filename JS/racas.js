@@ -4,7 +4,7 @@ const grid = document.getElementById("breedsGrid");
 // 1. FUNÇÃO PARA BUSCAR DO MONGODB (BACK-END)
 async function carregarRacas() {
     try {
-        const resposta = await fetch('http://localhost:3000/racas');
+        const resposta = await fetch('/racas');
         todasAsRacas = await resposta.json();
         renderRacas(todasAsRacas);
     } catch (err) {

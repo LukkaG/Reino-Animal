@@ -29,7 +29,7 @@ form.addEventListener("submit", async (e) => {
     const emailDigitado = document.getElementById('email').value;
     const enderecoDigitado = document.getElementById('address').value;
 
-    const resposta = await fetch('http://localhost:3000/usuarios', {
+    const resposta = await fetch('/usuarios', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'

@@ -34,7 +34,7 @@ form.addEventListener('submit', async (event) => {
 
   try {
 
-    const resposta = await fetch('http://localhost:3000/login', {
+    const resposta = await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -79,3 +79,11 @@ function logout() {
 
 const token = localStorage.getItem('tokenReinoAnimal');
 
+fetch('/finalizar-compra', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ itens: carrinho })
+});
