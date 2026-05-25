@@ -197,8 +197,9 @@ nav a:hover {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
+  align-items: start; /* ESTA É A LINHA QUE RESOLVE O PROBLEMA */
 }
 
 .product-card {
@@ -291,6 +292,32 @@ nav a:hover {
 
 }
 
+.filters-container {
+    display: flex;
+    justify-content: center; /* Centraliza os botões na página */
+    gap: 15px; /* Espaço entre os botões */
+    margin-bottom: 40px; /* Dá um respiro antes de começar os cards */
+    flex-wrap: wrap; /* Se a tela for pequena, eles quebram a linha organizados */
+}
+
+.filter-btn {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    background: #16a34a;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+
+.filter-btn:hover {
+    background: #1f7a45;
+    color: white;
+    transform: translateY(-2px);
+}
+
 .breeds-page {
   width: 100%;
   min-height: 100vh;
@@ -317,6 +344,7 @@ nav a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
   gap: 30px;
+  align-items: start;
 }
 
 .breed-card {
@@ -471,6 +499,7 @@ nav a:hover {
 
 .filters button:hover{
   background:#14532d;
+  transform: translateY(-2px);
 }
 
 .products-grid{

@@ -6,17 +6,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const path = require('path');
+const bcrypt = require('bcrypt');
 app.use(express.static(path.resolve(__dirname, '../')));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const dbURI = process.env.MONGO_URI;
-
 
 console.log('Link encontrado pelo Node:', dbURI);
 
@@ -24,18 +22,20 @@ app.post('/usuarios', async (req, res) => {
   try {
     console.log('Dados recebidos do formulário:', req.body);
 
-   
-    const novoUsuario = await Usuario.create({
-      nomeCompleto: req.body.nomeCompleto,
-      email: req.body.email,
-      senha: req.body.senha,
-      endereco: req.body.endereco
+    const { nomeCompleto, email, senha, endereco } = req.body;	
+      const saltRounds = 10;
+	    const senhaCriptografada = await bcrypt.hash(senha, saltRounds);
+      const novoUsuario = await Usuario.create({
+      nomeCompleto: nomeCompleto,
+      email: email,
+      senha: senhaCriptografada,
+      endereco: endereco
     });
 
    
     res.status(201).json({ 
       mensagem: 'Usuário cadastrado com sucesso!', 
-      usuario: novoUsuario 
+      usuario: { nomeCompleto: novoUsuario.nomeCompleto, email: novoUsuario.email }
     });
 
   } catch (err) {
@@ -47,17 +47,23 @@ app.post('/racas', async (req, res) => {
     try {
         const novaRaca = await Raca.create({
             nomeRaca: req.body.nomeRaca,
+            tipo: req.body.tipo,
+            classe: req.body.classe,
+            imagem: req.body.imagem,
             porte: req.body.porte,
             expectativaVida: req.body.expectativaVida,
-            descricao: req.body.descricao
+            descricao: req.body.descricao,
+            cuidados: req.body.cuidados,
+            dicas: req.body.dicas
         });
 
         res.status(201).json({ 
-            mensagem: 'Raça cadastrada!', 
+            mensagem: 'Raça cadastrada com sucesso!', 
             dados: novaRaca 
         });
 
     } catch (err) {
+        console.error("Erro no POST /racas:", err);
         res.status(500).json({ erro: err.message });
     }
 });
@@ -129,13 +135,16 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
     }
 
-    if (usuarioEncontrado.senha !== senha) {
+     const senhaCorreta = await bcrypt.compare(senha, usuarioEncontrado.senha);
+
+     if (!senhaCorreta) {
       return res.status(400).json({ erro: 'E-mail ou senha incorretos.' });
-    }
+       }
 
     res.status(200).json({ 
       mensagem: 'Login realizado com sucesso! 🎉',
       usuario: { nome: usuarioEncontrado.nomeCompleto }
+      
     });
 
   } catch (err) {

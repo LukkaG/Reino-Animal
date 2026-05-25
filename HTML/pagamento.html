@@ -104,6 +104,20 @@
   </div>
 </section>
 
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h2>🛒 Carrinho</h2>
+    <button onclick="closeCart()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div id="cart-items"></div>
+  <div class="cart-footer">
+    <h3>Total: <span id="cart-total">R$ 0,00</span></h3>
+    <button class="finish-btn" onclick="window.location.href='./pagamento.html'">Finalizar Compra</button>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-brand">
@@ -136,5 +150,6 @@
 </footer>
 
 <script src="/JS/pagamento.js"></script>
+<script src="/JS/carrinho.js"></script>
 </body>
 </html>

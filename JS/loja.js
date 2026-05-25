@@ -1,8 +1,6 @@
 let todosOsProdutos = []; // Lista global que guardará os produtos vindos do MongoDB
 const productsGrid = document.getElementById('productsGrid');
-let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-// 2. FUNÇÃO PARA RENDERIZAR OS CARDS NA TELA
 function renderProdutos(listaDeProdutos) {
     productsGrid.className = "product-grid"; 
     productsGrid.innerHTML = ""; 
@@ -26,14 +24,20 @@ function renderProdutos(listaDeProdutos) {
                 <p style="padding: 0 20px; text-align: left; color: #55715f; font-size: 0.95rem;">${produto.descricao}</p>
                 <span class="price">R$ ${produto.preco.toFixed(2).replace('.', ',')}</span>
                 
-                <button id="btn-${index}" class="info-btn" onclick="toggleInfo(${index})">Ver produto</button>
+                <button class="info-btn" onclick="toggleInfo(this)">Ver produto</button>
                 
-                <div id="info-${index}" class="more-info" style="display: none; background: #f0fdf4; margin: 0 20px 20px; padding: 15px; border-radius: 14px; text-align: left;">
+                <div class="more-info" style="display: none; background: #f0fdf4; margin: 0 20px 20px; padding: 15px; border-radius: 14px; text-align: left;">
                     <ul style="margin: 0 0 15px 0; padding-left: 20px; color: #14532d; font-size: 0.95rem;">
                         ${listaAtributos}
                     </ul>
                     
-                    <button class="add-to-cart-btn" onclick="addToCartById('${produto._id}')" style="width: 100%; margin: 0; padding: 10px;">
+                    <button class="add-to-cart-btn" 
+                        data-id="${produto._id}" 
+                        data-nome="${produto.nomeProduto}" 
+                        data-preco="${produto.preco}" 
+                        data-imagem="${produto.imagem}" 
+                        onclick="adicionarAoCarrinho(this)" 
+                        style="width: 100%; margin: 0; padding: 10px;">
                         Adicionar ao carrinho
                     </button>
                 </div>
@@ -43,21 +47,25 @@ function renderProdutos(listaDeProdutos) {
 }
 
 // 3. CONTROLE DA JANELA DE INFORMAÇÕES (ISOLADO)
-function toggleInfo(index) {
-    // Busca exatamente a caixinha e o botão daquele número
-    const infoContainer = document.getElementById(`info-${index}`);
-    const button = document.getElementById(`btn-${index}`);
+function toggleInfo(botaoClicado) {
+    // Pega a caixa verde logo abaixo do botão clicado
+    const caixaAtual = botaoClicado.nextElementSibling;
     
-    // Segurança caso o elemento não exista
-    if (!infoContainer) return;
+    // Checa se a caixa que acabamos de clicar JÁ estava aberta
+    const estavaAberta = caixaAtual.style.display === "block";
 
-    // Se estiver escondido, mostra. Se estiver mostrando, esconde.
-    if (infoContainer.style.display === "none" || infoContainer.style.display === "") {
-        infoContainer.style.display = "block";
-        if (button) button.innerText = "Fechar detalhes";
-    } else {
-        infoContainer.style.display = "none";
-        if (button) button.innerText = "Ver produto";
+    // 1. FECHA TODAS: Varre a tela escondendo todas as caixas e resetando os botões
+    document.querySelectorAll('.more-info').forEach(caixa => {
+        caixa.style.display = "none";
+    });
+    document.querySelectorAll('.info-btn').forEach(btn => {
+        btn.innerText = "Ver produto";
+    });
+
+    // 2. ABRE A CLICADA: Se a caixa que você clicou estava fechada, abre ela agora
+    if (!estavaAberta) {
+        caixaAtual.style.display = "block";
+        botaoClicado.innerText = "Fechar detalhes";
     }
 }
 // 4. BUSCA OS PRODUTOS DIRETO DA API DO BACK-END (MONGO DB)
@@ -85,85 +93,4 @@ function filtrarProdutos(categoriaSelecionada) {
     }
 }
 
-// 6. SISTEMA DO CARRINHO DE COMPRAS
-function toggleCart() {
-    document.getElementById("cartSidebar").classList.toggle("active");
-}
-
-function addToCartById(idProduto) {
-    const produtoEncontrado = todosOsProdutos.find(p => p._id === idProduto);
-    if (produtoEncontrado) {
-        const itemCarrinho = {
-            nome: produtoEncontrado.nomeProduto,
-            preco: `R$ ${produtoEncontrado.preco.toFixed(2).replace('.', ',')}`,
-            imagem: produtoEncontrado.imagem
-        };
-        
-        const itemExistente = carrinho.find(item => item.nome === itemCarrinho.nome);
-        if (itemExistente) {
-            itemExistente.quantidade++;
-        } else {
-            // CORREÇÃO AQUI: Removida a palavra solta 'House' que causava erro de sintaxe
-            carrinho.push({ ...itemCarrinho, quantidade: 1 });
-        }
-        atualizarCarrinho();
-    }
-}
-
-function alterarQuantidade(nome, tipo) {
-    const item = carrinho.find(produto => produto.nome === nome);
-    if (!item) return;
-
-    if (tipo === "mais") {
-        item.quantidade++;
-    }
-    if (tipo === "menos") {
-        item.quantidade--;
-        if (item.quantidade <= 0) {
-            carrinho = carrinho.filter(produto => produto.nome !== nome);
-        }
-    }
-    atualizarCarrinho();
-}
-
-function atualizarCarrinho() {
-    const cartItems = document.getElementById("cart-items");
-    const cartTotal = document.getElementById("cart-total");
-    const cartCount = document.getElementById("cart-count");
-
-    if (!cartItems || !cartTotal) return;
-
-    cartItems.innerHTML = "";
-    let total = 0;
-    let quantidadeTotal = 0;
-
-    carrinho.forEach(produto => {
-        const precoNumero = Number(produto.preco.replace("R$", "").replace(/\./g, "").replace(",", "."));
-        total += precoNumero * produto.quantidade;
-        quantidadeTotal += produto.quantidade;
-
-        cartItems.innerHTML += `
-        <div class="cart-item">
-          <img src="${produto.imagem || 'https://via.placeholder.com/150'}">
-          <div class="cart-item-info">
-            <h4>${produto.nome}</h4>
-            <p>${produto.preco}</p>
-            <div class="quantity-controls">
-              <button onclick="alterarQuantidade('${produto.nome}','menos')">-</button>
-              <span>${produto.quantidade}</span>
-              <button onclick="alterarQuantidade('${produto.nome}','mais')">+</button>
-            </div>
-          </div>
-        </div>
-        `;
-    });
-
-    cartTotal.innerText = total.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-    if (cartCount) cartCount.innerText = quantidadeTotal;
-
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-}
-
-// 7. INICIALIZAÇÃO DA PÁGINA
 carregarProdutos();
-atualizarCarrinho();
