@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function logout() {
-    localStorage.removeItem('tokenReinoAnimal'); // Apaga o token
-    window.location.href = "/Index.html"; // Volta para a home
+    localStorage.removeItem('tokenReinoAnimal');
+    window.location.href = "/Index.html";
 }
 
 const token = localStorage.getItem('tokenReinoAnimal');
