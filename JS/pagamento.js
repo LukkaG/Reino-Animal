@@ -70,7 +70,7 @@ document.getElementById('pagamentoForm').addEventListener('submit', async functi
     if (resposta.ok) {
         localStorage.removeItem('carrinhoReinoAnimal');
         alert("✅ Pedido finalizado com sucesso e salvo no sistema!");
-        window.location.href = "./index.html";
+        window.location.href = "./Index.html";
     } else {
         const dadosErro = await resposta.json();
         alert("Erro ao finalizar: " + (dadosErro.erro || "Tente novamente"));
