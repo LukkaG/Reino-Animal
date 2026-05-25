@@ -46,7 +46,7 @@ form.addEventListener("submit", async (e) => {
 
     if (resposta.ok) {
         alert('Cadastro realizado com sucesso!');
-        window.location.href = "./login.html";
+        window.location.href = "/login.html";
     } else {
         alert('Erro ao cadastrar: ' + dados.erro);
     }

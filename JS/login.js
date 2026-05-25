@@ -50,7 +50,7 @@ form.addEventListener('submit', async (event) => {
     if (resposta.ok) {
       localStorage.setItem('tokenReinoAnimal', dados.token);
       alert(`Bem-vindo de volta, ${dados.usuario.nome}!`);
-      window.location.href = "/HTML/index.html";
+      window.location.href = "/index.html";
       
     } else {
       alert(dados.erro);
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function logout() {
     localStorage.removeItem('tokenReinoAnimal'); // Apaga o token
-    window.location.href = "/HTML/index.html"; // Volta para a home
+    window.location.href = "/index.html"; // Volta para a home
 }
 
 const token = localStorage.getItem('tokenReinoAnimal');
