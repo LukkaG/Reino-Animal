@@ -22,6 +22,11 @@ const dbURI = process.env.MONGO_URI;
 
 console.log('Link encontrado pelo Node:', dbURI);
 
+app.get('/', (req, res) => {
+    // Ajuste o caminho conforme onde o seu arquivo Index.html realmente está
+    res.sendFile(path.resolve(__dirname, '../', 'Index.html')); 
+});
+
 app.post('/finalizar-compra', verificarToken, async (req, res) => {
     try {
         const { itens, total } = req.body;
