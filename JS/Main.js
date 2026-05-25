@@ -12,6 +12,8 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.resolve(__dirname, '..', 'HTML')));
+app.use('/CSS', express.static(path.resolve(__dirname, '..', 'CSS')));
+app.use('/JS', express.static(path.resolve(__dirname, '..', 'JS')));
 app.use('/img', express.static(path.resolve(__dirname, '..', 'Img')));
 app.use(cors());
 app.use(express.json());
