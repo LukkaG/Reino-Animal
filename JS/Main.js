@@ -10,6 +10,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.resolve(__dirname, '../')));
 app.use(cors());
 app.use(express.json());
